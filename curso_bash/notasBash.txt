@@ -1,0 +1,3 @@
+- Debug en script (muestra la ejecucion de un script con el valor de sus variables linea por linea)
+$ bash -v file.sh
+$ bash -x file.sh
