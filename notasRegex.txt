@@ -1,0 +1,65 @@
+
+-------------------------SOME IMPORTANT PREDEFINED EXPRESSIONS-------------------------------
+
+(?<=...)	Positive lookbehind
+(?<!...)	Negative lookbehind
+(?=...)	Positive lookahead
+(?!...)	Negative lookahead
+*		Match 0 or more times
+.		Matches any character, except a new line
+.*		Matches any character 0 or more times
+\/		This is how a single slash "/" needs to be written in a regular expression
+{n} 		Match exactly n times.
+{n,} 		Match at least n times.
+{x,y} 		Match at least x times, but no more than y times.
+
+-----------------------------------------------------------------
+
+
+
+1 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+The Regular expresion:
+/(?<=..\/Pictures\/).*(?=\/)/
+
+Matches everything that is between the expression: "../Pictures/", and a slash: "/"
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+
+
+
+
+2-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+The legacy RegExp $1, $2, $3, $4, $5, $6, $7, $8, $9 properties are static and read-only properties of regular expressions that contain parenthesized substring matches. For example:
+
+In Javascript:
+var re = /(\w+)\s(\w+)/;
+var str = 'John Smith';
+str.replace(re, '$2, $1'); // "Smith, John"
+RegExp.$1; // "John"
+RegExp.$2; // "Smith"
+
+
+In LibreOffice Calc with Find and Replace feature:
+In "Find" Field: ^(.*)
+In "Replace" Field: '$1
+
+That will put a single quote (') at the beginning of each string in the sheet, as "$1" will contain the string captured in the parenthesis of "^(.*)"
+
+So, everything in a Regex closed with parenthesis can be captured again with $1, $2, $3, etc...
+
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_ NEGATED/EXCLUDED PATTERNS -_-_-_-_-_-_-_-_-_-_-_-_-
+
+
+[^...]		---> In this case the three points "..." won't be matched in a sentence, for example:
+
+[^\d]		---> Will match everything except a digit(number)
+
+
