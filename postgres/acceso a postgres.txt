@@ -1,0 +1,13 @@
+
+# psql -d <database_name> -U <user>
+
+<database_name>=>
+
+\q: Quit psql
+\?: Get help for psql commands
+\h: Get help for SQL commands.
+\dt: List tables in the current database.
+\l: List all databases
+\c: If no database specified it will show the current database one is connected to.
+
+
