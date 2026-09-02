@@ -1,0 +1,91 @@
+
+-_-_- HOW TO INSTALL IN FEDORA - CENTOS - RED HAT -_-_-_
+
+
+# dnf module list | grep -i postgresql
+# yum module install postgresql:12/server
+# yum module install postgresql:12/client
+
+# postgresql-setup --initdb
+
+- Despues se debe crear un password para el usuario por defecto "postgres", se puede hacer de dos formas:
+  Una es loguearse como usuario local "postgres" y una vez adentro ir a la base de datos "postgres":
+	$ sudo -i -u postgres
+	$ psql		(esto nos lleva a la base de datos del mismo nombre del usuario, si hay que ir a una base de datos con otro nombre, se debe ingresar $psql <database_name>)
+  La otra es hacerlo sin salir de la sesion del usuario actual y hacerlo en una sola linea:
+	$ sudo -u postgres psql postgres	(esto nos conecta como usuario "postgres" dentro de la base de datos "postgres")
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+-_													-_
+-_  NOTA: En caso de que no exista la base de datos "postgres" se puede crear usando el comando:	-_
+-_	$ sudo -u postgres createdb postgres								-_
+-_													-_
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+  
+  Ya dentro de la base de datos "postgres" se debe poner lo siguiente para asignar un password al usuario "postgres":
+	ALTER USER postgres with encrypted password 'your_password';
+  Despues en /var/lib/pgsql/data/pg_hba.conf se debe poner al final de las lineas lo siguiente (no olvidar comentar las demás lineas de host con protocolo ident):
+	host    all             all             127.0.0.1/32            md5
+  Así ya nos autenticaremos con MD5 en vez con IDENT, esto es preferible porque con el protocolo IDENT se tendría que instalar un servidor IDENT.
+
+  Ya podemos usar el cliente de postgresql para conectarnos por red ( para conectarse desde otro computador se debe modificar el  pg_hba.conf ):
+	$ psql -h 127.0.0.1 -U postgres -d postgres
+  No olvidar que los datos son <hostIP>, <user>, <database_name> (en postgres siempre debmos especificar una base de datos a la cual conectarnos):
+	$ psql -h <hostIP> -U <user> -d <database_name>
+
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-__
+-_																	-_
+-_  NOTA: Cuando uno crea la base de datos postgres en AWS, Por defecto ya están creados el usuario y la base de datos "postgres"	-_
+-_	  La conexion remota a la base de datos se puede hacer sin problema alguno de la siguiente forma:				-_
+-_	  $ psql -h <hostIP> -U postgres -d postgres											-_
+-_																	-_
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-__
+
+
+
+-_-_- MAKE BACKUPS -_-_-
+
+- The following command will generate a SQL Dump file of a specified database in the working directory.
+
+$ pg_dump --host <hostIP> --port <portNumber> --username <username> --verbose --file <desired_filebackupname.sql> <databaseName>
+
+<portNumber>: Usually 5432
+
+
+
+
+-_-_- RESTORE BACKUP -_-_-
+
+- In the postgres server machine, we log into postgres, create the database specified in the backup file and create the owner of that database.
+  Then, inside the postgres database (after issuing "$ psql -h <hostIP> -U ..." ) we locate the backup file and run the SQL sentences inside it:
+
+	=# \i desired_filebackupname.sql
+
+
+
+
+
+
+-_-_- META COMMANDS -_-_-
+
+
+\?		--> Lists all available metacommands
+
+\l		--> lists all created databases
+
+\c		--> connect to a specified database
+
+\d		--> lists relations of all tables of a database
+
+\d+ <table>	--> lists all columns of the table among other things
+
+\dt		--> lists all tables of a database
+
+\h 		--> SQL help, when a command is forgot
+
+\i <file>	--> executes a file (usualli a .sql file)
+
+\!		--> executes a command in the shell we are working
+
+

@@ -1,0 +1,1 @@
+SELECT * FROM Orders WHERE EmployeeID=5 and CustomerID='VINET';

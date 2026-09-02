@@ -1,0 +1,2 @@
+ALTER TABLE table2
+ALTER column_name SET DEFAULT 1;

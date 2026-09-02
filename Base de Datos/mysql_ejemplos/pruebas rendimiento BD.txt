@@ -1,0 +1,3 @@
+tarea:
+comparar tipo DATE con tipo INT en base de datos
+
