@@ -11,6 +11,9 @@ print(tasks)
 tasks[0] = "watch netflix"
 print(tasks)
 
+print(tasks[-1]) # el 1 negativo siempre será el último elemento de la lista, el 2 negativo será el penúltimo y así sucesivamente
+print(tasks[-2])
+
 types = [1, True, "hola"]
 print(True in types)
 print("hola" in types)
@@ -55,3 +58,20 @@ print(numbers_a)
 strings = ['re', 'ab', 'ed']
 strings.sort()
 print(strings)
+
+print("concateno dos listas:")
+print(numbers_a + strings)
+
+print("trato un string como una lista:")
+string_ejemplo = "hola como estas"
+print(string_ejemplo[-1])
+print(string_ejemplo[-2])
+print(string_ejemplo[0])
+print(string_ejemplo[1])
+
+print("funcion enumerate:")
+for indice, valor in enumerate(string_ejemplo):
+    print(f'{indice}: {valor}')
+
+print("son diferentes las listas 'numbers_a' y 'strings'?")
+print(numbers_a == strings)
